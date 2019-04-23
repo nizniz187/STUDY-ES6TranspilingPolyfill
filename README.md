@@ -17,7 +17,7 @@ Study notes for ES6 polyfill implementation.
 
 > **Reference**
 > - **[ES6 Compatibility Table](https://kangax.github.io/compat-table/es6/)**
-> - **[ECMAScript 6 | HTML5 PLEASE](https://html5please.com/#ecmascript%206)**
+> - **[ECMAScript 6 | HTML5 PLEASE](https://html5please.com/#ecmascript)**
 > - [Polyfill 與 Transpiler | 你懂 JavaScript 嗎？](https://cythilya.github.io/2018/10/10/intro-2/#polyfill)
 
 ## C. Transpilers | TK
@@ -26,11 +26,12 @@ Study notes for ES6 polyfill implementation.
 
 > **Reference**
 > - [原始碼到原始碼編譯器 | Wikipedia](https://zh.wikipedia.org/wiki/%E6%BA%90%E5%88%B0%E6%BA%90%E7%BC%96%E8%AF%91%E5%99%A8)
+> - [The Super Tiny Compiler](https://github.com/jamiebuilds/the-super-tiny-compiler)
 
 ### C-1. Babel
 
 > **Reference**
-> - [Babel](https://babeljs.io/)
+> - [Babel](https://babeljs.io/docs/en/index.html)
 
 ### C-2. Traceur
 
