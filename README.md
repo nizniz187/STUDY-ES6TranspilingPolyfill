@@ -29,9 +29,84 @@ Study notes for ES6 polyfill implementation.
 > - [The Super Tiny Compiler](https://github.com/jamiebuilds/the-super-tiny-compiler)
 
 ### C-1. Babel
+1. Babel setup with C# / .NET `C-1-1`
+1. Install core library w/ npm
+    ```
+    npm install --save-dev @babel/core
+    ```
+    `--save-dev` : install in dev environment only  
+    `@babel/core` : babel transpiler core package
+2. Transpiling:
+    1. by JS require:
+        ```
+        const babel = require("@babel/core");
+
+        babel.transform("code", optionsObject);
+        ```
+    1. by CLI tool: 
+        ```
+        npm install --save-dev @babel/cli
+        ```
+        `@babel/cli` : babel command line tool
+        
+        ```
+        ./node_modules/.bin/babel src --out-dir lib
+        ```
+        Transpile the source code under `src` to `lib`.  
+        But this command needs options to define how the code to be transpiled, or it would just output the same as the source code. (See `Plugins` & `Presets`.)
+1. Plugins: 
+    - Small JS programs that instruct Babel on how to carry out transformations to the code.
+    - Custimizable.
+    - Official plugin for transform ES6+ arrow functions to ES5: `@babel/plugin-transform-arrow-functions`
+        ```
+        npm install --save-dev @babel/plugin-transform-arrow-functions
+
+        ./node_modules/.bin/babel src --out-dir lib --plugins=@babel/plugin-transform-arrow-functions
+        ```
+1. Presets:
+    - Pre-determined set of plugins.
+    - Custumizable.
+    - Official preset to include all plugins to support modern JS: `@env`.
+    - Can take options to load the specific plugins only.
+    - Installation:
+        - by CLI tool:
+            ```
+            npm install --save-dev @babel/preset-env
+
+            ./node_modules/.bin/babel src --out-dir lib --presets=@babel/env
+            ```
+        - by Configuration:
+            Create `babel.config.js` config file in the root of the project.
+            ```
+            const presets = [
+              [
+                "@babel/env",
+                {
+                  targets: {
+                    edge: "17",
+                    firefox: "60",
+                    chrome: "67",
+                    safari: "11.1",
+                  }
+                },
+              ],
+            ];
+
+            module.exports = { presets };
+            ```
+            `useBuiltIns` : apply the last optimization  
+            Now the env preset will only load transformation plugins for features that are not available in our target browsers.
 
 > **Reference**
 > - [Babel](https://babeljs.io/docs/en/index.html)
+> - [@babel/core](https://babeljs.io/docs/en/babel-core)
+> - [@babel/cli](https://babeljs.io/docs/en/babel-cli)
+> - [如何正確的設置 babel (Late 2018)](https://nereuseng.github.io/2018/11/27/babel-usage/)
+
+#### C-1-1. Babel Setup with C# / .NET
+
+> **Reference**
+> - [Interactive Setup Guide | Babel](https://babeljs.io/setup.html#installation)
 
 ### C-2. Traceur
 
@@ -49,6 +124,7 @@ Study notes for ES6 polyfill implementation.
 ### D-1. Babel/Polyfill
 
 > **Reference**
+> - [Polyfill | Usage Guide | Babel](https://babeljs.io/docs/en/usage#polyfill)
 > - [@babel/polyfill | Babel](https://babeljs.io/docs/en/babel-polyfill/)
 > - [https://javascript.info/polyfills#babel](https://javascript.info/polyfills#babel)
 
