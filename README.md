@@ -28,6 +28,15 @@ Study notes for ES6 polyfill implementation.
 
 
 ## B. Babel | TK
+1. Setup & Transpiling `B-1`
+1. Babel/Polyfill `B-2`
+1. Configure Babel `B-3`
+1. Babel setup with C# / .NET `B-4`
+    
+> **Reference**
+> - [Babel](https://babeljs.io/docs/en/index.html)
+
+### B-1. Setup & Transpiling
 1. Install core library w/ npm
     ```
     npm install --save-dev @babel/core
@@ -92,30 +101,27 @@ Study notes for ES6 polyfill implementation.
 
             module.exports = { presets };
             ```
-            Now the env preset will only load transformation plugins for features that are not available in our target browsers.    
-1. Babel/Polyfill `B-1`
-1. Configure Babel `B-2`
-1. Babel setup with C# / .NET `B-3`
+            Now the env preset will only load transformation plugins for features that are not available in our target browsers.
             
 > **Reference**
-> - [Babel](https://babeljs.io/docs/en/index.html)
+> - [Usage Guide | Babel](https://babeljs.io/docs/en/usage)
 > - [@babel/core](https://babeljs.io/docs/en/babel-core)
 > - [@babel/cli](https://babeljs.io/docs/en/babel-cli)
 
-### B-1. Babel/Polyfill | TK
+### B-2. Babel/Polyfill | TK
 
 > **Reference**
+> - [Babel Polyfills | JS Info](https://javascript.info/polyfills#babel)
 > - [Polyfill | Usage Guide | Babel](https://babeljs.io/docs/en/usage#polyfill)
 > - [@babel/polyfill | Babel](https://babeljs.io/docs/en/babel-polyfill/)
-> - [https://javascript.info/polyfills#babel](https://javascript.info/polyfills#babel)
 
-### B-2. Configure Babel | TK
+### B-3. Configure Babel | TK
 
 > **Reference**
 > - [Configure Babel | Babel](https://babeljs.io/docs/en/configuration)
 > - [如何正確的設置 babel (Late 2018)](https://nereuseng.github.io/2018/11/27/babel-usage/)
 
-### B-3. Babel Setup with C# / .NET | TK
+### B-4. Babel Setup with C# / .NET | TK
 
 > **Reference**
 > - [Interactive Setup Guide | Babel](https://babeljs.io/setup.html#installation)
