@@ -15,6 +15,8 @@ Study notes for ES6 polyfill implementation.
 1. Polyfill：**用於實現瀏覽器並不支援的原生 API 的程式碼。**
 1. Polyfill 是 shim 的一種，情境限制在瀏覽器 API 上。**Polyfill 是一個用於瀏覽器 API 上的 shim。**
 2. 一般實現的作法為：檢查瀏覽器對某 API 的支援度，若不支援，則載入對應的 polyfill 來實現該 API。
+1. core-js `<B-1>`
+1. Polyfill.io `<B-2>`
 
 > **Reference**
 > - **[前端“黑話”polyfill](https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/29473/)**
@@ -25,7 +27,14 @@ Study notes for ES6 polyfill implementation.
 > **Reference**
 > - [core-js | GitHub](https://github.com/zloirock/core-js)
 
+### B-2. Polyfill.io | TK
+
+> **Reference**
+> - [Polyfill.io](https://polyfill.io/v3/)
+
 ## C. Transpilers
+1. Babel `<C-1>`
+1. Traceur `<C-2>`
 
 > **Reference**
 > - [原始碼到原始碼編譯器 | Wikipedia](https://zh.wikipedia.org/wiki/%E6%BA%90%E5%88%B0%E6%BA%90%E7%BC%96%E8%AF%91%E5%99%A8)
@@ -172,8 +181,3 @@ Study notes for ES6 polyfill implementation.
 
 > **Reference**
 > - [Traceur](https://github.com/google/traceur-compiler)
-
-### C-3. Polyfill.io | TK
-
-> **Reference**
-> - [Polyfill.io](https://polyfill.io/v3/)
