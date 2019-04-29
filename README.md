@@ -88,7 +88,7 @@ Study notes for ES6 polyfill implementation.
             ./node_modules/.bin/babel src --out-dir lib --presets=@babel/env
             ```
         - by Configuration:
-            在專案根目錄建立 `babel.config.js` 設定黨。
+            在專案根目錄建立 `babel.config.js` 設定檔。
             ```
             const presets = [
               [
@@ -147,12 +147,12 @@ Study notes for ES6 polyfill implementation.
 > - [Babel Polyfills | JS Info](https://javascript.info/polyfills#babel)
 > - [@babel/polyfill | Babel](https://babeljs.io/docs/en/babel-polyfill/)
 
-##### C-1-2-1. Regenerator | TK
+#### C-1-2-1. Regenerator | TK
 
 > **Reference**
 > - [regenerator | GitHub](https://github.com/facebook/regenerator)
 
-##### C-1-2-2. Transform Runtime Plugin | TK
+#### C-1-2-2. Transform Runtime Plugin | TK
 
 > **Reference**
 > - [@babel/plugin-transform-runtime | Babel](https://babeljs.io/docs/en/babel-plugin-transform-runtime)
