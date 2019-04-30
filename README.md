@@ -23,9 +23,21 @@ Study notes for ES6 polyfill implementation.
 > - [Polyfill (programming) | Wikipedia](https://en.wikipedia.org/wiki/Polyfill_(programming))
 
 ### B-1. core-js | TK
+1. 應用最廣泛的 polyfill 函式庫，被許多套件引用作為 polyfill 核心（如 Babel）。
+1. 可彈性引入需要的 polyfill。
+1. 可避免變動到全域命名空間。
+1. 安裝：
+    ```
+    // global version
+    npm install --save core-js@3.0.1
+    // version without global namespace pollution
+    npm install --save core-js-pure@3.0.1
+    // bundled global version
+    npm install --save core-js-bundle@3.0.1
+    ```
 
 > **Reference**
-> - [core-js | GitHub](https://github.com/zloirock/core-js)
+> - **[core-js | GitHub](https://github.com/zloirock/core-js)**
 
 ### B-2. Polyfill.io | TK
 
@@ -58,7 +70,7 @@ Study notes for ES6 polyfill implementation.
     `--save-dev` : 僅安裝於開發環境
     `@babel/core` : babel transpiler core package
 2. Transpiling:
-    1. by JS require:
+    1. by JS require (CommonJS API):
         ```
         const babel = require("@babel/core");
 
