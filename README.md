@@ -1,6 +1,8 @@
 # STUDY-ES6Polyfill
 Study notes for ES6 polyfill implementation.
 
+---
+
 ## A. ES6 Compatibility
 若須在 IE 上支援 ES6，則必須：
 1. **導入 polyfill 函式庫來實現新的原生 API**。`<B>`
@@ -10,6 +12,8 @@ Study notes for ES6 polyfill implementation.
 > - **[ES6 Compatibility Table](https://kangax.github.io/compat-table/es6/)**
 > - **[ECMAScript 6 | HTML5 PLEASE](https://html5please.com/#ecmascript)**
 > - [Polyfill 與 Transpiler | 你懂 JavaScript 嗎？](https://cythilya.github.io/2018/10/10/intro-2/#polyfill)
+
+---
 
 ## B. Polyfill
 1. Polyfill：**用於實現瀏覽器並不支援的原生 API 的程式碼。**
@@ -22,11 +26,12 @@ Study notes for ES6 polyfill implementation.
 > - **[前端“黑話”polyfill](https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/29473/)**
 > - [Polyfill (programming) | Wikipedia](https://en.wikipedia.org/wiki/Polyfill_(programming))
 
-### B-1. core-js | TK
+### B-1. core-js
 1. 應用最廣泛的 polyfill 函式庫，被許多套件引用作為 polyfill 核心（如 Babel）。
 1. 可彈性引入需要的 polyfill。
 1. 可避免變動到全域命名空間。
 1. 安裝：
+    
     ```
     // global version
     npm install --save core-js@3.0.1
@@ -39,10 +44,20 @@ Study notes for ES6 polyfill implementation.
 > **Reference**
 > - **[core-js | GitHub](https://github.com/zloirock/core-js)**
 
-### B-2. Polyfill.io | TK
+### B-2. Polyfill.io
+1. 自動化 polyfill js 打包線上服務。
+1. 使用其所提供的 API get 資源，將欲支援的功能作為參數傳遞，即可獲得適用於該瀏覽器所需的所有 polyfill minified bundle 檔。
+1. 優點：
+    - 省事
+    - 根據當下所使用的瀏覽器自動偵測，省去其他瀏覽器的 polyfill。
+1. 缺點：
+    - 站外資源無法控管
+    - 多一次額外的 request
 
 > **Reference**
 > - [Polyfill.io](https://polyfill.io/v3/)
+
+---
 
 ## C. Transpilers
 1. Babel `<C-1>`
@@ -64,6 +79,7 @@ Study notes for ES6 polyfill implementation.
 
 #### C-1-1. Setup & Transpiling
 1. 使用 **npm** 安裝 core library：
+    
     ```
     npm install --save-dev @babel/core
     ```
@@ -91,6 +107,7 @@ Study notes for ES6 polyfill implementation.
     - 用來指示 Babel 如何轉譯原始碼的小型 JS 程式。
     - 可自訂。
     - 用於將 ES6+ 箭頭函式轉譯為 ES5 語法的 Babel 官方 plugin：`@babel/plugin-transform-arrow-functions`。
+        
         ```
         npm install --save-dev @babel/plugin-transform-arrow-functions
 
@@ -101,9 +118,10 @@ Study notes for ES6 polyfill implementation.
     - 可自訂。
     - 包含所有支援現代 JS 語法 plugin 的 Babel 官方 preset `@env`，搭配 browserlist 可以指定瀏覽器支援版本。
     - 可以設定參數，只載入特定 plugin。
-    - stage：過新的 preset，可能標準都還沒確立。分成 0-4 五個階段。
+    - stage：過新的 preset，可能仍在草案階段。分成 0-4 五個階段。
     - 安裝：
         - by CLI tool:
+            
             ```
             npm install --save-dev @babel/preset-env
 
@@ -111,6 +129,7 @@ Study notes for ES6 polyfill implementation.
             ```
         - by Configuration:
             在專案根目錄建立 `babel.config.js` 設定檔。
+            
             ```
             const presets = [
               [
