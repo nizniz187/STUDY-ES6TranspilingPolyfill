@@ -99,8 +99,9 @@ Study notes for ES6 polyfill implementation.
 1. Presets:
     - 預設好的 plugin 組合。
     - 可自訂。
-    - 包含所有支援現代 JS 語法 plugin 的 Babel 官方 preset：`@env`。
+    - 包含所有支援現代 JS 語法 plugin 的 Babel 官方 preset `@env`，搭配 browserlist 可以指定瀏覽器支援版本。
     - 可以設定參數，只載入特定 plugin。
+    - stage：過新的 preset，可能標準都還沒確立。分成 0-4 五個階段。
     - 安裝：
         - by CLI tool:
             ```
@@ -133,6 +134,7 @@ Study notes for ES6 polyfill implementation.
 > - [Usage Guide | Babel](https://babeljs.io/docs/en/usage)
 > - [@babel/core](https://babeljs.io/docs/en/babel-core)
 > - [@babel/cli](https://babeljs.io/docs/en/babel-cli)
+> - [Babel - 走向 JavaScript 的嶄新未來 | JS 生態系及週邊工具整理](https://ithelp.ithome.com.tw/articles/10194314)
 
 #### C-1-2. Babel/Polyfill | TK
 1. `@babel/polyfill` 包含 **core-js** 和一個客製化的 **regenerator runtime** `<C-1-2-1>`。
