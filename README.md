@@ -67,15 +67,15 @@ Study notes for ES6 polyfill implementation.
 > - [原始碼到原始碼編譯器 | Wikipedia](https://zh.wikipedia.org/wiki/%E6%BA%90%E5%88%B0%E6%BA%90%E7%BC%96%E8%AF%91%E5%99%A8)
 > - [The Super Tiny Compiler](https://github.com/jamiebuilds/the-super-tiny-compiler)
 
-
-### C-1. Babel | TK
+### C-1. Babel
 1. Setup & Transpiling `<C-1-1>`
-1. Babel/Polyfill `<C-1-2>`
+1. Polyfills in Babel `<C-1-2>`
 1. Configure Babel `<C-1-3>`
 1. Babel setup with C# / .NET `<C-1-4>`
     
 > **Reference**
 > - [Babel](https://babeljs.io/docs/en/index.html)
+> - [Babel Polyfills | JS Info](https://javascript.info/polyfills)
 
 #### C-1-1. Setup & Transpiling
 1. 使用 **npm** 安裝 core library：
@@ -116,7 +116,7 @@ Study notes for ES6 polyfill implementation.
 1. Presets:
     - 預設好的 plugin 組合。
     - 可自訂。
-    - 包含所有支援現代 JS 語法 plugin 的 Babel 官方 preset `@env`，搭配 browserlist 可以指定瀏覽器支援版本。
+    - `@babel/preset-env`：包含所有支援現代 JS 語法 plugin 的 Babel 官方 preset。搭配 browserlist 可以指定瀏覽器支援版本，同時支援 polyfill 功能 `<C-1-2-2>`。
     - 可以設定參數，只載入特定 plugin。
     - stage：過新的 preset，可能仍在草案階段。分成 0-4 五個階段。
     - 安裝：
@@ -155,49 +155,52 @@ Study notes for ES6 polyfill implementation.
 > - [@babel/cli](https://babeljs.io/docs/en/babel-cli)
 > - [Babel - 走向 JavaScript 的嶄新未來 | JS 生態系及週邊工具整理](https://ithelp.ithome.com.tw/articles/10194314)
 
-#### C-1-2. Babel/Polyfill | TK
-1. `@babel/polyfill` 包含 **core-js** 和一個客製化的 **regenerator runtime** `<C-1-2-1>`。
-1. 若不需要 instance methods (ex. Array.prototype.includes)，可改用 **transform runtime plugin**，避免更動全域 scope。`<C-1-2-2>`
+#### C-1-2. Polyfills in Babel
+1. Babel 使用 **core-js** 來實現 polyfill，與之相關的套件分為三個：
+    1. @babel/polyfill `<C-1-2-1>`
+    1. @babel/preset-env `<C-1-2-2>`
+    1. @babel/runtime `<C-1-2-3>`
+1. **Tanspile + Polyfill**：舊的寫法中，polyfill 跟 transpile 功能是分開的，例如：`babel-preset-es2015` + `babel-polyfill`。但在 Babel 7 出來後推出了 `@babel/preset-env`，棄用了以年為單位的 preset（`babel-preset-es2015`、`babel-preset-es2016`、`babel-preset-es2017`、`babel-preset-latest`）；使用 `@babel/preset-env` 同時就會引入 `core-js`，意味著轉譯與 polyfill 已綁在一起。
+
+> **Reference**
+> - **[Babel | core-js](https://github.com/zloirock/core-js#babel)**
+> - [Upgrade to Babel 7 | Babel](https://babeljs.io/docs/en/v7-migration)
+
+#### C-1-2-1. @babel/polyfill
+1. `@babel/polyfill` 包含 **core-js 的穩定功能（全域版、無 ES 草案）** 和一個客製化的 **[regenerator runtime](https://github.com/nizniz187/STUDY-RegeneratorRuntime)**。
+1. 停留在版本 `core-js@2`，基本上已棄用。
+1. 若不需要 instance methods (ex. Array.prototype.includes)，可改用 **transform runtime plugin**，避免更動全域 scope。`<C-1-2-3>`
 1. 安裝：
     ```
     npm install --save @babel/polyfill
     ```
-    **Polyfill 必須要原始碼之前先執行，因此要安裝在正式環境下。**
-    
-    ```
-    const presets = [
-      [
-        "@babel/env",
-        {
-          targets: {
-            edge: "17",
-            firefox: "60",
-            chrome: "67",
-            safari: "11.1",
-          },
-          useBuiltIns: "usage",
-        },
-      ],
-    ];
-
-    module.exports = { presets };
-    ```
-    `useBuiltIns: "usage"`: Babel 會檢查程式碼，尋找目標環境所缺少的功能，並只引入需要的 polyfill。若未設置為 `usage`，則 Babel 會在所有程式碼之前的進入點，一次性引入完整的 polyfill。
+    **Polyfill 必須要在原始碼之前先執行，因此要安裝在正式環境下。**
 
 > **Reference**
 > - [Polyfill | Usage Guide | Babel](https://babeljs.io/docs/en/usage#polyfill)
-> - [Babel Polyfills | JS Info](https://javascript.info/polyfills#babel)
 > - [@babel/polyfill | Babel](https://babeljs.io/docs/en/babel-polyfill/)
+> - **[@babel/polyfill | core-js](https://github.com/zloirock/core-js#babelpolyfill)**
 
-#### C-1-2-1. Regenerator | TK
+#### C-1-2-2. @babel/preset-env
+1. 使用 **core-js 全域版**。
+1. 利用 `useBuiltIns` 選項來自動最佳化引入所需的 core-js polyfill 功能。
+    - `useBuiltIns: 'usage'`：預設引入穩定功能的 polyfill。Babel 會檢查程式碼，尋找目標環境所缺少的功能，並只引入需要的 polyfill。若未設置為 `usage`，則 Babel 會在所有程式碼之前的進入點，一次性引入完整的 polyfill。
+1. 建議設置 `corejs` 選項來指定 core-js 版本。例如：`corejs: '3.0'`。
 
 > **Reference**
-> - [regenerator | GitHub](https://github.com/facebook/regenerator)
+> - [@babel/preset-env | Babel](https://babeljs.io/docs/en/babel-preset-env)
+> - **[@babel/preset-env | core-js](https://github.com/zloirock/core-js#babelpreset-env)**
 
-#### C-1-2-2. Transform Runtime Plugin | TK
+#### C-1-2-3. @babel/runtime
+1. **共用生成的 helper code**：Babel 在轉譯過程中，會生成許多 helper 通用程式碼；這些程式碼存在於轉譯後的各個模組中，但其實內容完全相同可共用。這個模組讓所有 helper 關連到 `@babel/runtime` 模組，避免轉譯後重複宣告。
+1. **創造出沙盒環境**：實現 `core-js-pure` 功能，自動將新的 JS 語法取代成從 `core-js` 引入的版本，避免變動全域命名空間。
+    - 適用於函式庫開發。
+1. 預設使用穩定功能的 polyfill。
 
 > **Reference**
-> - [@babel/plugin-transform-runtime | Babel](https://babeljs.io/docs/en/babel-plugin-transform-runtime)
+> - **[@babel/plugin-transform-runtime | Babel](https://babeljs.io/docs/en/babel-plugin-transform-runtime)**
+> - [@babel/runtime | Babel](https://babeljs.io/docs/en/babel-runtime)
+> - **[@babel/runtime | core-js](https://github.com/zloirock/core-js#babelruntimev)**
 
 #### C-1-3. Configure Babel | TK
 
