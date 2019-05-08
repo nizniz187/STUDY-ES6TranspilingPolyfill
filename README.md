@@ -79,13 +79,7 @@ Study notes for ES6 polyfill implementation.
 > - [Babel Polyfills | JS Info](https://javascript.info/polyfills)
 
 #### C-1-1. Setup & Transpiling
-1. 使用 **npm** 安裝 core library：
-    
-    ```
-    npm install --save-dev @babel/core
-    ```
-    `--save-dev` : 僅安裝於開發環境
-    `@babel/core` : babel transpiler core package
+1. 安裝：使用 **npm** 安裝 core library `@babel/core`。
 2. Transpiling:
     1. by JS require (CommonJS API):
         ```
