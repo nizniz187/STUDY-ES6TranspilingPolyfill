@@ -51,7 +51,7 @@ Study notes for ES6 polyfill implementation.
     - 省事
     - 根據當下所使用的瀏覽器自動偵測，省去其他瀏覽器的 polyfill。
 1. 缺點：
-    - 站外資源無法控管
+    - 站外資源無法控管（解法：下載其 GitHub 程式，部署到自己的 server。）
     - 多一次額外的 request
 
 > **Reference**
@@ -69,8 +69,8 @@ Study notes for ES6 polyfill implementation.
 
 ### C-1. Babel
 1. Setup & Transpiling `<C-1-1>`
-1. Polyfills in Babel `<C-1-2>`
-1. Configure Babel `<C-1-3>`
+1. Polyfill `<C-1-2>`
+1. Configuration `<C-1-3>`
 1. Babel setup with C# / .NET `<C-1-4>`
     
 > **Reference**
@@ -155,12 +155,14 @@ Study notes for ES6 polyfill implementation.
 > - [@babel/cli](https://babeljs.io/docs/en/babel-cli)
 > - [Babel - 走向 JavaScript 的嶄新未來 | JS 生態系及週邊工具整理](https://ithelp.ithome.com.tw/articles/10194314)
 
-#### C-1-2. Polyfills in Babel
+#### C-1-2. Polyfill
 1. Babel 使用 **core-js** 來實現 polyfill，與之相關的套件分為三個：
     1. @babel/polyfill `<C-1-2-1>`
     1. @babel/preset-env `<C-1-2-2>`
     1. @babel/runtime `<C-1-2-3>`
-1. **Tanspile + Polyfill**：舊的寫法中，polyfill 跟 transpile 功能是分開的，例如：`babel-preset-es2015` + `babel-polyfill`。但在 Babel 7 出來後推出了 `@babel/preset-env`，棄用了以年為單位的 preset（`babel-preset-es2015`、`babel-preset-es2016`、`babel-preset-es2017`、`babel-preset-latest`）；使用 `@babel/preset-env` 同時就會引入 `core-js`，意味著轉譯與 polyfill 已綁在一起。
+1. **Tanspile + Polyfill**：
+    - 在舊版，polyfill 跟 transpile 是分開設定的。因此若設定使用 `babel-preset-es2015`，預設只轉譯語法，需額外引入 `babel-polyfill` 才會加入 polyfill 功能。
+    - Babel 7 推出了 `@babel/preset-env`，棄用了以年為單位的 preset（`babel-preset-es2015`、`babel-preset-es2016`、`babel-preset-es2017`、`babel-preset-latest`）；使用 `@babel/preset-env` 同時就會引入 `core-js`，意味著不須再額外引入 `@babel/polyfill`，並可直接在 `@babel/preset-env` 中設定是否加入 polyfill 功能。 `<C-1-2-2>`
 
 > **Reference**
 > - **[Babel | core-js](https://github.com/zloirock/core-js#babel)**
@@ -168,7 +170,7 @@ Study notes for ES6 polyfill implementation.
 
 #### C-1-2-1. @babel/polyfill
 1. `@babel/polyfill` 包含 **core-js 的穩定功能（全域版、無 ES 草案）** 和一個客製化的 **[regenerator runtime](https://github.com/nizniz187/STUDY-RegeneratorRuntime)**。
-1. 停留在版本 `core-js@2`，基本上已棄用。
+1. 停留在版本 `core-js@2`，基本上已不建議使用。
 1. 若不需要 instance methods (ex. Array.prototype.includes)，可改用 **transform runtime plugin**，避免更動全域 scope。`<C-1-2-3>`
 1. 安裝：
     ```
@@ -183,13 +185,18 @@ Study notes for ES6 polyfill implementation.
 
 #### C-1-2-2. @babel/preset-env
 1. 使用 **core-js 全域版**。
-1. 利用 `useBuiltIns` 選項來自動最佳化引入所需的 core-js polyfill 功能。
-    - `useBuiltIns: 'usage'`：預設引入穩定功能的 polyfill。Babel 會檢查程式碼，尋找目標環境所缺少的功能，並只引入需要的 polyfill。若未設置為 `usage`，則 Babel 會在所有程式碼之前的進入點，一次性引入完整的 polyfill。
-1. 建議設置 `corejs` 選項來指定 core-js 版本。例如：`corejs: '3.0'`。
+1. 利用 `useBuiltIns` 屬性來設定是否引入 polyfill 功能並自動最佳化。
+    - `useBuiltIns: 'entry'`：依據 JS 進入點的 `core-js` 設定，自動替換成目標環境所需的 polyfill 模組。
+    - `useBuiltIns: 'usage'`：檢查程式碼，尋找目標環境所缺少的功能，並只引入需要的 polyfill。
+        - 預設引入穩定功能的 polyfill。
+        - **小風險：由於 Babel 無法判斷程式碼中的資料型態，因此有可能載入錯誤的 polyfill。欲避免此風險，可使用 `useBuiltIns: 'entry'`，或手動引入每個 polyfill。**
+    - `useBuiltIns: 'disable'`：不使用 polyfill。（預設）
+1. 建議設置 `corejs` 屬性來指定 core-js 版本。例如：`corejs: '3.0'`。
 
 > **Reference**
 > - [@babel/preset-env | Babel](https://babeljs.io/docs/en/babel-preset-env)
 > - **[@babel/preset-env | core-js](https://github.com/zloirock/core-js#babelpreset-env)**
+> - **[如何正確的設置 babel (Late 2018)](https://nereuseng.github.io/2018/11/27/babel-usage/)**
 
 #### C-1-2-3. @babel/runtime
 1. **共用生成的 helper code**：Babel 在轉譯過程中，會生成許多 helper 通用程式碼；這些程式碼存在於轉譯後的各個模組中，但其實內容完全相同可共用。這個模組讓所有 helper 關連到 `@babel/runtime` 模組，避免轉譯後重複宣告。
@@ -202,11 +209,18 @@ Study notes for ES6 polyfill implementation.
 > - [@babel/runtime | Babel](https://babeljs.io/docs/en/babel-runtime)
 > - **[@babel/runtime | core-js](https://github.com/zloirock/core-js#babelruntimev)**
 
-#### C-1-3. Configure Babel | TK
+#### C-1-3. Configuration
+1. 有兩種設定檔格式，可同時或單獨使用。
+    1. Project-wide: `babel.config.js`
+        - 放在與 `package.json` 相同的根目錄下。Babel 在轉譯時會自動在此根目錄中搜尋此設定檔。
+        - 適用於通用設定；能使 `node_modules` 下的所有 plugin 和 preset 輕鬆套用設定。
+    2. File-relative: `.babelrc` / `.babelrc.js` / 在 `package.json` 檔案中設定 `babel` 屬性
+        - Babel 在轉譯時會從轉譯的文件向上搜尋設定檔，並由下往上合併、 override 設定檔。
+        - 只會套用到所屬套件中的檔案
 
 > **Reference**
 > - [Configure Babel | Babel](https://babeljs.io/docs/en/configuration)
-> - [如何正確的設置 babel (Late 2018)](https://nereuseng.github.io/2018/11/27/babel-usage/)
+> - **[Config Files | Babel](https://babeljs.io/docs/en/config-files#project-wide-configuration)**
 
 #### C-1-4. Babel Setup with C# / .NET | TK
 
