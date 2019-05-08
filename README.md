@@ -68,6 +68,7 @@ Study notes for ES6 polyfill implementation.
 > - [The Super Tiny Compiler](https://github.com/jamiebuilds/the-super-tiny-compiler)
 
 ### C-1. Babel
+1. **Babel 採用 npm，預設是在支援 [CommonJS](https://github.com/nizniz187/STUDY-JS-Module-Tools#c-commonjs) `require` 語法的 runtime 下執行模組載入。如要在此架構下作為 production 打包 / 運行，需要其他打包工具如 [webpack](https://github.com/nizniz187/STUDY-JS-Module-Tools#e-webpack--tk)。**
 1. Setup & Transpiling `<C-1-1>`
 1. Polyfill `<C-1-2>`
 1. Configuration `<C-1-3>`
@@ -226,6 +227,13 @@ Study notes for ES6 polyfill implementation.
 
 > **Reference**
 > - [Interactive Setup Guide | Babel](https://babeljs.io/setup.html#installation)
+
+#### C-1-5. Performance
+1. 測試 PA JS 轉譯：
+    - 原始檔案：457KB（ES5 語法）
+    - 轉譯條件：相容 IE 9、Edge 14、FF 60、Chorme 67、Safari 10.3 以上；`useBuiltIns: "usage"`
+    - 轉譯耗時約 5 秒
+    - 產出檔案：574KB（僅增加 `core-js` 引入語法）
 
 ### C-2. Traceur | TK
 
