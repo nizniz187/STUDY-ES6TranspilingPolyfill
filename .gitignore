@@ -1,3 +1,4 @@
 babel-setup/lib/
 babel-setup/node_modules/
 core-js-setup/node_modules/
+node_modules
