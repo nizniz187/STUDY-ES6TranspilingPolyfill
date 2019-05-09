@@ -223,7 +223,6 @@ Study notes for ES6 polyfill implementation.
     - The code transpiled will be inserted after the original code as another `<script>` snippet.
     - Online-transpiling incurs time cost for page loading, thus **only suits for development phase** like prototyping.
 1. **ASP.NET MVC @ VS**：Babel in VS is usually bundled for React feature.
-    - 
 
 > **Reference**
 > - [Interactive Setup Guide | Babel](https://babeljs.io/setup.html#installation)
