@@ -217,10 +217,18 @@ Study notes for ES6 polyfill implementation.
 > - [Configure Babel | Babel](https://babeljs.io/docs/en/configuration)
 > - **[Config Files | Babel](https://babeljs.io/docs/en/config-files#project-wide-configuration)**
 
-#### C-1-4. Babel Setup with C# / .NET | TK
+#### C-1-4. Integration
+1. **Standalone**：Babel can be imported via `<script>` and run as an online transpiler.
+    - The JS code to be transpiled should be used with **`<script type='text/babel'>`**.
+    - The code transpiled will be inserted after the original code as another `<script>` snippet.
+    - Online-transpiling incurs time cost for page loading, thus **only suits for development phase** like prototyping.
+1. **ASP.NET MVC @ VS**：Babel in VS is usually bundled for React feature.
+    - 
 
 > **Reference**
 > - [Interactive Setup Guide | Babel](https://babeljs.io/setup.html#installation)
+> - [babel/babel-standalone | GitHub](https://github.com/babel/babel-standalone)
+> - **[JS - Babel使用详解1（基本介绍、使用babel-standalone实现ES6在线转换）](http://www.hangge.com/blog/cache/detail_1688.html)**
 
 #### C-1-5. Performance
 1. 測試 PA JS 轉譯：
@@ -229,7 +237,7 @@ Study notes for ES6 polyfill implementation.
     - 轉譯耗時約 5 秒
     - 產出檔案：574KB（僅增加 `core-js` 引入語法）
 
-### C-2. Traceur | TK
+### C-2. Traceur
 
 > **Reference**
 > - [Traceur](https://github.com/google/traceur-compiler)
