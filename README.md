@@ -187,11 +187,13 @@ Study notes for ES6 polyfill implementation.
         - **小風險：由於 Babel 無法判斷程式碼中的資料型態，因此有可能載入錯誤的 polyfill。欲避免此風險，可使用 `useBuiltIns: 'entry'`，或手動引入每個 polyfill。**
     - `useBuiltIns: 'disable'`：不使用 polyfill。（預設）
 1. 建議設置 `corejs` 屬性來指定 core-js 版本。例如：`corejs: '3.0'`。
+    - **如不指定版本，目前預設為引用 `core-js v2.x`。使用 `core-js v2.x` 需搭配安裝 `@babel/polyfill` 方能正確引用 `core-js`。**
 
 > **Reference**
 > - [@babel/preset-env | Babel](https://babeljs.io/docs/en/babel-preset-env)
 > - **[@babel/preset-env | core-js](https://github.com/zloirock/core-js#babelpreset-env)**
 > - **[如何正確的設置 babel (Late 2018)](https://nereuseng.github.io/2018/11/27/babel-usage/)**
+> - [Usage @babel/polyfill in Node / Browserify / Webpack | Babel](https://babeljs.io/docs/en/babel-polyfill#usage-in-node-browserify-webpack)
 
 #### C-1-2-3. @babel/runtime
 1. **共用生成的 helper code**：Babel 在轉譯過程中，會生成許多 helper 通用程式碼；這些程式碼存在於轉譯後的各個模組中，但其實內容完全相同可共用。這個模組讓所有 helper 關連到 `@babel/runtime` 模組，避免轉譯後重複宣告。
