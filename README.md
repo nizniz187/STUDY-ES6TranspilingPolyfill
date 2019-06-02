@@ -1,4 +1,4 @@
-# STUDY-ES6Polyfill
+# STUDY-ES6TranspilingPolyfill
 Study notes for ES6 polyfill implementation.
 
 ---
