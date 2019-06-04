@@ -1,6 +1,5 @@
 # STUDY-ES6TranspilingPolyfill
-Study notes for ES6 polyfill implementation.
-
+Study notes for ES6 transpiling & polyfill.
 ---
 
 ## A. ES6 Compatibility
@@ -226,17 +225,13 @@ Study notes for ES6 polyfill implementation.
     - Online-transpiling incurs time cost for page loading, thus **only suits for development phase** like prototyping.
 1. **ASP.NET MVC @ VS**：Babel in VS is usually bundled for React feature.
 
+> **Analysis**
+> [Integration with VS](https://github.com/nizniz187/STUDY-ES6TranspilingPolyfill/issues/9)
+
 > **Reference**
 > - [Interactive Setup Guide | Babel](https://babeljs.io/setup.html#installation)
 > - [babel/babel-standalone | GitHub](https://github.com/babel/babel-standalone)
 > - **[JS - Babel使用详解1（基本介绍、使用babel-standalone实现ES6在线转换）](http://www.hangge.com/blog/cache/detail_1688.html)**
-
-#### C-1-5. Performance
-1. 測試 PA JS 轉譯：
-    - 原始檔案：457KB（ES5 語法）
-    - 轉譯條件：相容 IE 9、Edge 14、FF 60、Chorme 67、Safari 10.3 以上；`useBuiltIns: "usage"`
-    - 轉譯耗時約 5 秒
-    - 產出檔案：574KB（僅增加 `core-js` 引入語法）
 
 ### C-2. Traceur
 
