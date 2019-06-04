@@ -225,8 +225,7 @@ Study notes for ES6 transpiling & polyfill.
     - Online-transpiling incurs time cost for page loading, thus **only suits for development phase** like prototyping.
 1. **ASP.NET MVC @ VS**：Babel in VS is usually bundled for React feature.
 
-> **Analysis**
-> [Integration with VS](https://github.com/nizniz187/STUDY-ES6TranspilingPolyfill/issues/9)
+> **Analysis:** [Integration with VS](https://github.com/nizniz187/STUDY-ES6TranspilingPolyfill/issues/9)
 
 > **Reference**
 > - [Interactive Setup Guide | Babel](https://babeljs.io/setup.html#installation)
